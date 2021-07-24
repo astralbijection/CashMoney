@@ -1,14 +1,14 @@
-name:                cashmoney
-version:             0.1.0.0
-github:              "Github username here/cashmoney"
-license:             BSD3
-author:              "Author name here"
-maintainer:          "Author email here"
-copyright:           "2019 Author name here"
+name: cashmoney
+version: 0.1.0.0
+github: "astralbijection/cashmoney"
+license: BSD3
+author: "Astrid Yu"
+maintainer: "Astrid Yu"
+copyright: "2021 Astrid Yu"
 
 extra-source-files:
-- README.md
-- ChangeLog.md
+  - README.md
+  - ChangeLog.md
 
 # Metadata used when publishing your package
 # synopsis:            Short description of your package
@@ -17,32 +17,41 @@ extra-source-files:
 # To avoid duplicated efforts in documentation and dealing with the
 # complications of embedding Haddock markup inside cabal files, it is
 # common to point users to the README.md file.
-description:         Please see the README on GitHub at <https://github.com/Github username here/cashmoney#readme>
+description: Please see the README on GitHub at <https://github.com/astralbijection/cashmoney#readme>
 
 dependencies:
-- base >= 4.7 && < 5
+  - base >= 4.7 && < 5
+  - time
+  - filepath
+  - text
+  - cassava
+
+default-extensions:
+  - DeriveGeneric
+  - OverloadedStrings
 
 library:
   source-dirs: src
 
 executables:
   cashmoney-exe:
-    main:                Main.hs
-    source-dirs:         app
+    main: Main.hs
+    source-dirs: app
     ghc-options:
-    - -threaded
-    - -rtsopts
-    - -with-rtsopts=-N
+      - -threaded
+      - -rtsopts
+      - -with-rtsopts=-N
     dependencies:
-    - cashmoney
+      - cashmoney
 
 tests:
   cashmoney-test:
-    main:                Spec.hs
-    source-dirs:         test
+    main: Spec.hs
+    source-dirs: test
     ghc-options:
-    - -threaded
-    - -rtsopts
-    - -with-rtsopts=-N
+      - -threaded
+      - -rtsopts
+      - -with-rtsopts=-N
     dependencies:
-    - cashmoney
+      - cashmoney
+      - hspec
