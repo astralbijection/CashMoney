@@ -1,6 +1,9 @@
 module Main where
-
-import Lib
+  
+import Options.Applicative
+import CashMoney.CLI
 
 main :: IO ()
-main = someFunc
+main = do
+         args <- execParser parserInfo
+         run args

@@ -30,11 +30,14 @@ dependencies:
   - vector
   - cassava
   - containers
+  - optparse-applicative
+  - raw-strings-qq
 
 default-extensions:
   - DeriveGeneric
   - OverloadedStrings
   - NamedFieldPuns
+  - QuasiQuotes
 
 library:
   source-dirs: src

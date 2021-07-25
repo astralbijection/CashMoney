@@ -60,5 +60,9 @@
     <orderEntry type="library" name="Glob-0.10.1" level="project" />
     <orderEntry type="library" name="dlist-1.0" level="project" />
     <orderEntry type="library" name="transformers-compat-0.6.6" level="project" />
+    <orderEntry type="library" name="optparse-applicative-0.16.1.0" level="project" />
+    <orderEntry type="library" name="raw-strings-qq-1.1" level="project" />
+    <orderEntry type="library" name="ansi-wl-pprint-0.6.9" level="project" />
+    <orderEntry type="library" name="process-1.6.9.0" level="project" />
   </component>
 </module>
