@@ -1,11 +1,11 @@
 module CashMoney.Data.Transaction where
 
 import Data.Time.Calendar (Day)
+import Data.Text (Text)
 
 data Transaction = Transaction
   { delta :: Float,
-    transactionType :: String,
-    category :: String,
-    description :: String,
+    category :: Text,
+    description :: Text,
     day :: Day
   }

@@ -24,11 +24,15 @@ dependencies:
   - time
   - filepath
   - text
+  - text-format
+  - bytestring
+  - vector
   - cassava
 
 default-extensions:
   - DeriveGeneric
   - OverloadedStrings
+  - NamedFieldPuns
 
 library:
   source-dirs: src
