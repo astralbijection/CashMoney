@@ -29,6 +29,7 @@ dependencies:
   - bytestring
   - vector
   - cassava
+  - containers
 
 default-extensions:
   - DeriveGeneric

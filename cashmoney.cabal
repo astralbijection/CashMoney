@@ -25,8 +25,10 @@ source-repository head
 
 library
   exposed-modules:
+      CashMoney.Data.Config
       CashMoney.Data.Importer
       CashMoney.Data.Transaction
+      CashMoney.Import.ChaseBankCSV
       CashMoney.Import.ChaseCardCSV
       CashMoney.Import.Util
       Lib
@@ -43,6 +45,7 @@ library
     , base >=4.7 && <5
     , bytestring
     , cassava
+    , containers
     , filepath
     , text
     , text-format
@@ -67,6 +70,7 @@ executable cashmoney-exe
     , bytestring
     , cashmoney
     , cassava
+    , containers
     , filepath
     , text
     , text-format
@@ -78,6 +82,7 @@ test-suite cashmoney-test
   type: exitcode-stdio-1.0
   main-is: Spec.hs
   other-modules:
+      CashMoney.Import.ChaseBankCSVSpec
       CashMoney.Import.ChaseCardCSVSpec
       Paths_cashmoney
   hs-source-dirs:
@@ -93,6 +98,7 @@ test-suite cashmoney-test
     , bytestring
     , cashmoney
     , cassava
+    , containers
     , filepath
     , hspec
     , text
