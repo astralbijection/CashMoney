@@ -2,6 +2,7 @@ module CashMoney.Import.ChaseCardCSV where
 
 import CashMoney.Data.Importer (Importer (..))
 import qualified CashMoney.Data.Transaction as Tr
+import CashMoney.Import.Util (readGlobbedCSVs)
 import qualified Data.ByteString.Lazy as BL
 import Data.Csv (FromRecord)
 import qualified Data.Csv as Csv
@@ -12,6 +13,8 @@ import Data.Text.Lazy (toStrict)
 import Data.Time (defaultTimeLocale, parseTimeOrError)
 import qualified Data.Vector as V
 import GHC.Generics (Generic)
+import System.FilePath.Glob
+import Data.Time.Calendar (Day)
 
 data Record = Record
   { transactionDate :: Text,
@@ -40,19 +43,16 @@ toTransaction (Record {postDate, description, category, amount, memo}) =
           Tr.description = desc
         }
 
-readRecords :: FilePath -> IO (V.Vector Record)
-readRecords path = do
-  csvData <- BL.readFile path
-  case Csv.decode Csv.HasHeader csvData of
-    Left err -> error err
-    Right rs -> return rs
+decodeTransactions :: Day -> V.Vector Record -> [Tr.Transaction]
+decodeTransactions earliestDay rs =
+  let trs = map toTransaction $ V.toList rs
+   in filter (\tr -> earliestDay < Tr.day tr) trs
 
-importChaseCardCSV :: Text -> FilePath -> Importer
-importChaseCardCSV iName path =
+importChaseCardCSV :: Text -> [Pattern] -> Importer
+importChaseCardCSV iName patterns =
   Importer
     { name = iName,
       getTransactionsAfter = \earliestDay -> do
-        rs <- readRecords path
-        let trs = map toTransaction $ V.toList rs
-        return $ filter (\tr -> earliestDay <= Tr.day tr) trs
+        rs <- readGlobbedCSVs Csv.HasHeader patterns
+        return $ concatMap (decodeTransactions earliestDay) rs
     }

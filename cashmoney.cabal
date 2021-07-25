@@ -28,6 +28,7 @@ library
       CashMoney.Data.Importer
       CashMoney.Data.Transaction
       CashMoney.Import.ChaseCardCSV
+      CashMoney.Import.Util
       Lib
   other-modules:
       Paths_cashmoney
@@ -38,7 +39,8 @@ library
       OverloadedStrings
       NamedFieldPuns
   build-depends:
-      base >=4.7 && <5
+      Glob
+    , base >=4.7 && <5
     , bytestring
     , cassava
     , filepath
@@ -60,7 +62,8 @@ executable cashmoney-exe
       NamedFieldPuns
   ghc-options: -threaded -rtsopts -with-rtsopts=-N
   build-depends:
-      base >=4.7 && <5
+      Glob
+    , base >=4.7 && <5
     , bytestring
     , cashmoney
     , cassava
@@ -85,7 +88,8 @@ test-suite cashmoney-test
       NamedFieldPuns
   ghc-options: -threaded -rtsopts -with-rtsopts=-N
   build-depends:
-      base >=4.7 && <5
+      Glob
+    , base >=4.7 && <5
     , bytestring
     , cashmoney
     , cassava

@@ -25,6 +25,7 @@ dependencies:
   - filepath
   - text
   - text-format
+  - Glob
   - bytestring
   - vector
   - cassava
