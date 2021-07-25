@@ -1,7 +1,7 @@
 name: cashmoney
 version: 0.1.0.0
 github: "astralbijection/cashmoney"
-license: BSD3
+license:  AGPL-3.0-only
 author: "Astrid Yu"
 maintainer: "Astrid Yu"
 copyright: "2021 Astrid Yu"
