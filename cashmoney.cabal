@@ -30,6 +30,9 @@ library
       CashMoney.Data.Transaction
       CashMoney.Import.ChaseBankCSV
       CashMoney.Import.ChaseCardCSV
+      CashMoney.Import.CitiCardCSV
+      CashMoney.Import.DiscoverCardCSV
+      CashMoney.Import.EBayCardCSV
       CashMoney.Import.Util
       Lib
   other-modules:
@@ -84,6 +87,9 @@ test-suite cashmoney-test
   other-modules:
       CashMoney.Import.ChaseBankCSVSpec
       CashMoney.Import.ChaseCardCSVSpec
+      CashMoney.Import.CitiCardCSVSpec
+      CashMoney.Import.DiscoverCardCSVSpec
+      CashMoney.Import.EBayCardCSVSpec
       Paths_cashmoney
   hs-source-dirs:
       test

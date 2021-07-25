@@ -1,47 +1,43 @@
-module CashMoney.Import.ChaseCardCSV where
+module CashMoney.Import.EBayCardCSV where
 
 import CashMoney.Data.Importer (Importer (..))
 import qualified CashMoney.Data.Transaction as Tr
 import CashMoney.Import.Util (importTransactionCSVs, parseMDY)
 import Data.Csv (FromRecord, HasHeader (HasHeader))
-import qualified Data.Csv as Csv
 import Data.Text (Text)
 import qualified Data.Text as T
 import Data.Text.Format (format)
 import Data.Text.Lazy (toStrict)
-import Data.Time (defaultTimeLocale, parseTimeOrError)
 import GHC.Generics (Generic)
-import System.FilePath.Glob
+import System.FilePath.Glob (Pattern)
 
 data Record = Record
   { transactionDate :: Text,
     postDate :: String,
-    description :: Text,
-    category :: Text,
-    tType :: Text,
+    referenceNumber :: Text,
     amount :: Float,
-    memo :: Text
+    description :: Text
   }
   deriving (Generic, Show)
 
 instance FromRecord Record
 
 toTransaction :: Record -> Maybe Tr.Transaction
-toTransaction (Record {postDate, description, category, amount, memo}) =
+toTransaction (Record {postDate, description, amount, referenceNumber}) =
   let desc =
-        if T.length memo > 0
-          then toStrict $ format "{} | {}" (description, memo)
+        if T.length referenceNumber > 0
+          then toStrict $ format "{} ({})" (description, referenceNumber)
           else description
    in Just
         Tr.Transaction
           { Tr.day = parseMDY postDate,
-            Tr.category = category,
+            Tr.category = "Shopping",
             Tr.delta = amount,
             Tr.description = desc
           }
 
-importChaseCardCSV :: Text -> [Pattern] -> Importer
-importChaseCardCSV iName patterns =
+importEBayCardCSV :: Text -> [Pattern] -> Importer
+importEBayCardCSV iName patterns =
   Importer
     { name = iName,
       getTransactionsAfter = importTransactionCSVs HasHeader toTransaction patterns

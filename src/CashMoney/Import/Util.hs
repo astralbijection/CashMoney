@@ -4,6 +4,8 @@ import CashMoney.Data.Transaction (Transaction)
 import qualified CashMoney.Data.Transaction as Tr
 import qualified Data.ByteString.Lazy as BL
 import Data.Csv (FromRecord, HasHeader (HasHeader), decode)
+import Data.Maybe (mapMaybe)
+import Data.Time (defaultTimeLocale, parseTimeOrError)
 import Data.Time.Calendar (Day)
 import Data.Vector (Vector)
 import qualified Data.Vector as V
@@ -21,11 +23,14 @@ readGlobbedCSVs hasHeader globs = do
         handleResult (Right result) = result
      in map handleResult results
 
-importTransactionCSVs :: FromRecord a => HasHeader -> (a -> Transaction) -> [Pattern] -> Day -> IO [Transaction]
+importTransactionCSVs :: FromRecord a => HasHeader -> (a -> Maybe Transaction) -> [Pattern] -> Day -> IO [Transaction]
 importTransactionCSVs hasHeader recordToTransaction patterns earliestDay = do
   rss <- readGlobbedCSVs hasHeader patterns
   return $ concatMap decodeTransactions rss
   where
     decodeTransactions rs =
-      let trs = map recordToTransaction $ V.toList rs
+      let trs = mapMaybe recordToTransaction $ V.toList rs
        in filter (\tr -> earliestDay < Tr.day tr) trs
+
+parseMDY :: String -> Day
+parseMDY = parseTimeOrError True defaultTimeLocale "%m/%d/%Y"

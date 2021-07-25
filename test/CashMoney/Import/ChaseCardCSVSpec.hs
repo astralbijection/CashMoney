@@ -8,8 +8,8 @@ import Test.Hspec
 
 spec :: Spec
 spec = do
-  describe "ChaseCardCSV" $ do
-    it "imports credit card CSVs" $ do
+  describe "importChaseCardCSV" $ do
+    it "imports from provided path" $ do
       let importer = importChaseCardCSV "coolboi" [compile "resources/test/chase-cred/MyCard1.csv"]
       result <- (getTransactionsAfter importer) (fromGregorian 2021 7 5)
       length result `shouldBe` (4 :: Int)
