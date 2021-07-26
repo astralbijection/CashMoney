@@ -43,7 +43,7 @@ library:
   source-dirs: src
 
 executables:
-  cashmoney-exe:
+  cashmoney:
     main: Main.hs
     source-dirs: app
     ghc-options:

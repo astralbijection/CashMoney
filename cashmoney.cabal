@@ -59,7 +59,7 @@ library
     , vector
   default-language: Haskell2010
 
-executable cashmoney-exe
+executable cashmoney
   main-is: Main.hs
   other-modules:
       Paths_cashmoney
