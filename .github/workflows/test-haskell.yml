@@ -9,31 +9,43 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
-    - uses: actions/setup-haskell@v1
-      with:
-        enable-stack: true
-        ghc-version: latest
+      - uses: actions/checkout@v2
+      - uses: actions/setup-haskell@v1
+        with:
+          enable-stack: true
+          ghc-version: latest
 
-    - name: Cache
-      uses: actions/cache@v1
-      env:
-        cache-name: cache-cabal
-      with:
-        path: ~/.cabal
-        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/*.cabal') }}-${{ hashFiles('**/cabal.project') }}
-        restore-keys: |
-          ${{ runner.os }}-build-${{ env.cache-name }}-
-          ${{ runner.os }}-build-
-          ${{ runner.os }}-
+      - name: Cache
+        uses: actions/cache@v1
+        env:
+          cache-name: cache-cabal
+        with:
+          path: ~/.cabal
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/*.cabal') }}-${{ hashFiles('**/cabal.project') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
 
-    - name: Test and create binary
-      run: stack install --test --local-bin-path ./bin
+      # We could just run stack install --test, which will do everything for us. However, we do it this way
+      # so we can debug which ones take the longest time.
 
-    - name: Upload binary as artifact
-      uses: actions/upload-artifact@v2
-      with:
-        name: cashmoney
-        path: bin/cashmoney
+      - name: Download dependencies
+        run: stack build --only-dependencies
+
+      - name: Compile app
+        run: stack build
+
+      - name: Run tests
+        run: stack test
+
+      - name: Generate binary
+        run: stack install --local-bin-path ./bin
+
+      - name: Upload binary as artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: cashmoney
+          path: bin/cashmoney
 
   # TODO integration testing >:)
