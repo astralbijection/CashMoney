@@ -23,7 +23,7 @@ data Record = Record
 instance FromRecord Record
 
 toTransaction :: Record -> Maybe Tr.Transaction
-toTransaction (Record {postDate, description, amount, referenceNumber}) =
+toTransaction Record {postDate, description, amount, referenceNumber} =
   let desc =
         if T.length referenceNumber > 0
           then toStrict $ format "{} ({})" (description, referenceNumber)

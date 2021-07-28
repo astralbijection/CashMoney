@@ -14,7 +14,7 @@ data RunArgs = RunArgs
 
 data RunType = Load LoadOptions | Meme deriving (Show)
 
-data LoadOptions = LoadOptions
+newtype LoadOptions = LoadOptions
   { clean :: Bool
   }
   deriving (Show)
@@ -31,7 +31,13 @@ parserInfo =
 parser :: Parser RunArgs
 parser =
   RunArgs
-    <$> strOption (long "config" <> short 'c' <> help "configuration file" <> showDefault <> value "cashmoney.yaml")
+    <$> strOption
+      ( long "config"
+          <> short 'c'
+          <> help "configuration file"
+          <> showDefault
+          <> value "cashmoney.yaml"
+      )
     <*> (subparser loadCommand <|> easterEggParser)
 
 run :: RunArgs -> IO ()
@@ -41,22 +47,24 @@ run args = case runType args of
     exitWith (ExitFailure 1)
   Load options -> do
     putStrLn $ "Config file " ++ configFile args
-    putStrLn $ show options
+    print options
     return ()
 
 loadCommand :: Mod CommandFields RunType
 loadCommand = command "load" (info loadParser (progDesc "Load data"))
   where
     loadParser =
-      Load <$> LoadOptions
-        <$> flag False True (long "clean" <> short 'k' <> help "Clear caches")
+      Load . LoadOptions
+        <$> flag
+          False
+          True
+          (long "clean" <> short 'k' <> help "Clear caches")
 
 easterEggParser :: Parser RunType
 easterEggParser =
   subparser $ memeCommand <> hidden <> internal
   where
-    memeCommand =
-      (command "of" (info (subparser memeSubcommand) mempty))
+    memeCommand = command "of" (info (subparser memeSubcommand) mempty)
     memeSubcommand = command "you" (info (pure Meme) mempty)
 
 sayaka :: TL.Text
@@ -71,8 +79,8 @@ sayaka =
     `-+o+/:-s+s+/++oo+/+-`:-  ,---`    `:+ds+o.                      ..         
     `` ``  `//+s/oso///y-.`` |    |     `-s+o`                        `-        
            ``:`-oo:/``o:.-:/.-----   ``.oh+o-                        .-.-       
-        .-.``.---:-:.`. ``-+ys:.`.-ss/:hNo/o      That wasn't         .: :`      
-      `-.         .://:-```.:-:/` -o-:ys- :/      very cash            ` .-      
+        .-.``.---:-:.`. ``-+ys:.`.-ss/:hNo/o      That wasn't        .: :`      
+      `-.         .://:-```.:-:/` -o-:ys- :/      very cash           ` .-      
     `-.          ``-::://:/:::+o. ``..`   .-      money of              `:      
  ``--`        ` ``` ``..`.--.-:+:.```     `:      you                   .-      
 .--.          `   ..`` `   `..-/`  ``..    /                            :`      

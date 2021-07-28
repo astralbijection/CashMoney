@@ -20,7 +20,7 @@ data Record = Record
 instance FromRecord Record
 
 toTransaction :: Record -> Maybe Tr.Transaction
-toTransaction (Record {postDate, description, category, amount}) =
+toTransaction Record {postDate, description, category, amount} =
   Just
     Tr.Transaction
       { Tr.day = parseMDY postDate,

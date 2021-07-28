@@ -11,5 +11,5 @@ spec = do
   describe "importCitiCardCSV" $ do
     it "imports from provided path" $ do
       let importer = importCitiCardCSV "coolboi" [compile "resources/test/citi-card/*"]
-      result <- (getTransactionsAfter importer) (fromGregorian 2020 3 16)
+      result <- getTransactionsAfter importer (fromGregorian 2020 3 16)
       length result `shouldBe` (10 :: Int)

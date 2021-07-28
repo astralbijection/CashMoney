@@ -4,12 +4,10 @@ import CashMoney.Data.Importer (Importer (..))
 import qualified CashMoney.Data.Transaction as Tr
 import CashMoney.Import.Util (importTransactionCSVs, parseMDY)
 import Data.Csv (FromRecord, HasHeader (HasHeader))
-import qualified Data.Csv as Csv
 import Data.Text (Text)
 import qualified Data.Text as T
 import Data.Text.Format (format)
 import Data.Text.Lazy (toStrict)
-import Data.Time (defaultTimeLocale, parseTimeOrError)
 import GHC.Generics (Generic)
 import System.FilePath.Glob
 
@@ -27,7 +25,7 @@ data Record = Record
 instance FromRecord Record
 
 toTransaction :: Record -> Maybe Tr.Transaction
-toTransaction (Record {postDate, description, category, amount, memo}) =
+toTransaction Record {postDate, description, category, amount, memo} =
   let desc =
         if T.length memo > 0
           then toStrict $ format "{} | {}" (description, memo)

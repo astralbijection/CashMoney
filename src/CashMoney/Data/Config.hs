@@ -1,11 +1,12 @@
 module CashMoney.Data.Config where
 
+import Data.Map (Map)
 import Data.Text (Text)
 import GHC.Generics (Generic)
-import Data.Map (Map)
 
 data ConfigFile = ConfigFile
-  { sources :: [Source]
+  { sources :: [Source],
+    output :: String
   }
   deriving (Generic, Show)
 

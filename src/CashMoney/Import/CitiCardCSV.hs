@@ -21,7 +21,7 @@ data Record = Record
 instance FromRecord Record
 
 toTransaction :: Record -> Maybe Tr.Transaction
-toTransaction (Record {status, date, description, credit, debit}) =
+toTransaction Record {status, date, description, credit, debit} =
   if status /= "Cleared"
     then Nothing
     else

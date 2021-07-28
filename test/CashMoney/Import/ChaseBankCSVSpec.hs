@@ -11,5 +11,5 @@ spec = do
   describe "importChaseBankCSV" $ do
     it "imports from provided path" $ do
       let importer = importChaseBankCSV "coolboi" [compile "resources/test/chase-bank/CheckingAccount.csv"]
-      result <- (getTransactionsAfter importer) (fromGregorian 2020 3 16)
+      result <- getTransactionsAfter importer (fromGregorian 2020 3 16)
       length result `shouldBe` (5 :: Int)

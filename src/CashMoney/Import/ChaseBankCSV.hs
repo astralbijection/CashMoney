@@ -25,7 +25,7 @@ data Record = Record
 instance FromRecord Record
 
 toTransaction :: Record -> Maybe Tr.Transaction
-toTransaction (Record {postDate, description, amount, tType, checkOrSlipNumber}) =
+toTransaction Record {postDate, description, amount, tType, checkOrSlipNumber} =
   let desc = toStrict $ format "{} ({})" (description, checkOrSlipNumber)
    in Just
         Tr.Transaction
