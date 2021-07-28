@@ -20,7 +20,13 @@ data LoadOptions = LoadOptions
   deriving (Show)
 
 parserInfo :: ParserInfo RunArgs
-parserInfo = info (parser <**> helper) (fullDesc <> progDesc "Cash Money" <> header "Cash Money")
+parserInfo =
+  info
+    (parser <**> helper)
+    ( fullDesc
+        <> header "CashMoney"
+        <> progDesc "An app for managing your Cash and your Money"
+    )
 
 parser :: Parser RunArgs
 parser =
