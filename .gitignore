@@ -1,6 +1,6 @@
 
-# Created by https://www.toptal.com/developers/gitignore/api/haskell,intellij
-# Edit at https://www.toptal.com/developers/gitignore?templates=haskell,intellij
+# Created by https://www.toptal.com/developers/gitignore/api/haskell,intellij,visualstudiocode
+# Edit at https://www.toptal.com/developers/gitignore?templates=haskell,intellij,visualstudiocode
 
 ### Haskell ###
 dist
@@ -133,6 +133,22 @@ fabric.properties
 # https://plugins.jetbrains.com/plugin/12206-codestream
 .idea/codestream.xml
 
-# End of https://www.toptal.com/developers/gitignore/api/haskell,intellij
+### VisualStudioCode ###
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
+
+# Local History for Visual Studio Code
+.history/
+
+### VisualStudioCode Patch ###
+# Ignore all local history of files
+.history
+.ionide
+
+# End of https://www.toptal.com/developers/gitignore/api/haskell,intellij,visualstudiocode
 
 bin/
