@@ -15,7 +15,7 @@ jobs:
           enable-stack: true
           ghc-version: latest
 
-      - name: Cache
+      - name: Cache Cabal
         uses: actions/cache@v1
         env:
           cache-name: cache-cabal
@@ -25,6 +25,18 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-build-${{ env.cache-name }}-
             ${{ runner.os }}-build-
+            ${{ runner.os }}-
+
+      - name: Cache Stack
+        uses: actions/cache@v1
+        env:
+          cache-name: cache-cabal
+        with:
+          path: ~/.stack
+          key: ${{ runner.os }}-stack-${{ env.cache-name }}-${{ hashFiles('stack.yaml', 'stack.yaml.lock', 'package.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-stack-${{ env.cache-name }}-
+            ${{ runner.os }}-stack-
             ${{ runner.os }}-
 
       # We could just run stack install --test, which will do everything for us. However, we do it this way
